@@ -4,8 +4,10 @@ import com.github.rypengu23.autoworldtools.AutoWorldTools;
 import com.github.rypengu23.autoworldtools.config.ConfigLoader;
 import com.github.rypengu23.autoworldtools.config.ConsoleMessage;
 import com.github.rypengu23.autoworldtools.config.MainConfig;
-import com.onarandombox.MultiversePortals.MVPortal;
-import com.onarandombox.MultiversePortals.PortalLocation;
+import org.mvplugins.multiverse.portals.MVPortal;
+import org.mvplugins.multiverse.portals.MultiversePortalsApi;
+import org.mvplugins.multiverse.portals.PortalLocation;
+import org.mvplugins.multiverse.portals.utils.PortalManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -86,28 +88,28 @@ public class MultiversePortalsUtil {
             //ポータル情報取得
             //ポータルの取得に失敗した場合、次のポータルへ
             try {
-                MVPortal portal = AutoWorldTools.portals.getPortalManager().getPortal(portalName);
+                PortalManager portalManager = MultiversePortalsApi.get().getPortalManager();
+                MVPortal portal = portalManager.getPortal(portalName);
                 if (portal == null) {
                     Bukkit.getLogger().info("[AutoWorldTools] " + convertUtil.placeholderUtil("{portalname}", portalName, ConsoleMessage.MultiversePortalsUtil_PortalNotFound));
                     Bukkit.getLogger().info("[AutoWorldTools] " + convertUtil.placeholderUtil("{worldname}", worldName, "{portalname}", portalName, ConsoleMessage.MultiversePortalsUtil_PortalNotGenerateInfo));
                     continue;
                 }
                 //ポータルの大きさを1×1×2に設定
-                PortalLocation portalLocation = portal.getLocation();
+                PortalLocation portalLocation = portal.getPortalLocation();
 
-                Vector pos1 = portal.getLocation().getRegion().getMaximumPoint();
-                Vector pos2 = portal.getLocation().getRegion().getMinimumPoint();
+                Vector pos1 = portalLocation.getRegion().getMaximumPoint();
+                Vector pos2 = portalLocation.getRegion().getMinimumPoint();
 
                 pos1.setX((pos1.getBlockX() + pos2.getBlockX()) / 2);
                 pos1.setY(pos2.getBlockY());
-                pos1.setZ((pos1.getBlockX() + pos2.getBlockX()) / 2);
+                pos1.setZ((pos1.getBlockZ() + pos2.getBlockZ()) / 2);
 
                 pos2.setX(pos1.getBlockX());
                 pos2.setY(pos2.getBlockY() + 1);
                 pos2.setZ(pos1.getBlockZ());
 
-                portalLocation.setLocation(pos1, pos2, portalLocation.getMVWorld());
-                portal.setPortalLocation(portalLocation);
+                portal.setPortalLocation(new PortalLocation(pos1, pos2, portalLocation.getMVWorld()));
 
                 portalX = pos1.getBlockX();
                 portalY = pos1.getBlockY();
@@ -275,7 +277,7 @@ public class MultiversePortalsUtil {
                     setY++;
                     setZ = portalZ - 3;
                 }
-            }catch(NullPointerException e){
+            } catch (NullPointerException | IllegalStateException e) {
                 Bukkit.getLogger().warning("[AutoWorldTools] " + ConsoleMessage.MultiversePortalsUtil_PluginNotFound);
             }
         }

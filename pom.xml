@@ -55,16 +55,16 @@
 
     <repositories>
         <repository>
+            <id>local-repo</id>
+            <url>file://${user.home}/.m2/repository</url>
+        </repository>
+        <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>OnARandomBox</id>
-            <url>http://repo.onarandombox.com/content/groups/public/</url>
         </repository>
         <repository>
             <id>himajyun-repo</id>
@@ -78,6 +78,14 @@
             <id>mikeprimm</id>
             <url>http://repo.mikeprimm.com</url>
         </repository>
+        <repository>
+            <id>benthecat</id>
+            <url>https://repo.c0ding.party/multiverse-beta</url>
+        </repository>
+        <repository>
+            <id>sk89q-repo</id>
+            <url>https://maven.enginehub.org/repo/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -88,15 +96,29 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.onarandombox.multiversecore</groupId> <!-- Don't forget to replace this -->
-            <artifactId>Multiverse-Core</artifactId> <!-- Replace this as well -->
-            <version>4.2.2-SNAPSHOT</version> <!-- This too -->
+            <groupId>org.mvplugins.multiverse.portals</groupId>
+            <artifactId>multiverse-portals</artifactId>
+            <version>local</version>
+            <scope>system</scope>
+            <systemPath>C:/GitHub/Multiverse-Portals/build/libs/multiverse-portals-local.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.mvplugins.multiverse.core</groupId>
+            <artifactId>multiverse-core</artifactId>
+            <version>local</version>
+            <scope>system</scope>
+            <systemPath>C:/GitHub/Multiverse-Core/build/libs/multiverse-core-local.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.sk89q.worldedit</groupId>
+            <artifactId>worldedit-core</artifactId>
+            <version>7.3.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.onarandombox.multiverseportals</groupId> <!-- Don't forget to replace this -->
-            <artifactId>Multiverse-Portals</artifactId> <!-- Replace this as well -->
-            <version>4.2.2-SNAPSHOT</version> <!-- This too -->
+            <groupId>com.sk89q.worldedit</groupId>
+            <artifactId>worldedit-bukkit</artifactId>
+            <version>7.3.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -119,6 +141,13 @@
             <artifactId>discordsrv</artifactId>
             <version>1.22.0</version>
             <scope>provided</scope>
+            <optional>true</optional>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--<dependency>
             <groupId>us.dynmap</groupId>

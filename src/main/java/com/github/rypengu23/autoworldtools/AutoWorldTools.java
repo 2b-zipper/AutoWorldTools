@@ -3,7 +3,7 @@ package com.github.rypengu23.autoworldtools;
 import com.github.rypengu23.autoworldtools.command.*;
 import com.github.rypengu23.autoworldtools.config.*;
 import com.github.rypengu23.autoworldtools.watch.TimeSurveillance;
-import com.onarandombox.MultiversePortals.MultiversePortals;
+import org.mvplugins.multiverse.portals.MultiversePortals;
 import github.scarsz.discordsrv.DiscordSRV;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
